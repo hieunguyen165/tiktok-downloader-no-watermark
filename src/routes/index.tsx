@@ -391,6 +391,43 @@ function Index() {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section className="mx-auto mt-20 max-w-3xl">
+          <h2 className="text-center text-2xl font-bold sm:text-3xl">Câu hỏi thường gặp về tải video TikTok</h2>
+          <div className="mt-8 space-y-3">
+            {[
+              {
+                q: "Làm sao để tải video TikTok không logo?",
+                a: "Sao chép link video từ app TikTok (Chia sẻ → Sao chép liên kết), dán vào ô phía trên và bấm Tải video. Hệ thống trả về file MP4 không watermark.",
+              },
+              {
+                q: "Tải video TikTok trên TaiTok có miễn phí không?",
+                a: "Hoàn toàn miễn phí, không giới hạn lượt tải, không cần đăng ký tài khoản hay cài đặt phần mềm.",
+              },
+              {
+                q: "Có thể tải nhạc MP3 từ video TikTok không?",
+                a: "Có. Sau khi xử lý, bạn có thể chọn tải file MP3 chứa âm thanh gốc của video TikTok.",
+              },
+              {
+                q: "Chất lượng video TikTok tải xuống tối đa bao nhiêu?",
+                a: "Tối đa 1080p (Full HD) – đúng bằng chất lượng gốc TikTok và Douyin phát hành. Các tuỳ chọn 2K/4K/8K không khả dụng vì nguồn thật không có.",
+              },
+              {
+                q: "TaiTok có hỗ trợ tải video Douyin không?",
+                a: "Có. Công cụ hỗ trợ cả link TikTok quốc tế và Douyin (TikTok Trung Quốc).",
+              },
+            ].map((item) => (
+              <details key={item.q} className="group rounded-xl border border-border bg-card/30 p-4">
+                <summary className="cursor-pointer list-none font-semibold marker:hidden">
+                  <span className="text-[oklch(0.7_0.25_350)]">+ </span>
+                  {item.q}
+                </summary>
+                <p className="mt-2 text-sm text-muted-foreground">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         <p className="mx-auto mt-16 max-w-2xl text-center text-xs text-muted-foreground">
           TaiTok chỉ phục vụ mục đích cá nhân. Vui lòng tôn trọng bản quyền của tác giả gốc và
           không sử dụng nội dung tải xuống cho mục đích thương mại khi chưa được phép.
