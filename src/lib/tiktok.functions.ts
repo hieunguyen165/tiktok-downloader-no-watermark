@@ -48,6 +48,14 @@ const rawInputSchema = z.object({
   url: z.string().trim().min(1, "Vui lòng nhập link").max(500, "Link quá dài"),
 });
 
+export type DownloadQuality = {
+  label: string;
+  quality: "hd" | "sd" | "watermark" | "audio";
+  url: string;
+  ext: "mp4" | "mp3";
+  note?: string;
+};
+
 export type VideoInfo = {
   id: string;
   title: string;
@@ -55,9 +63,7 @@ export type VideoInfo = {
   authorAvatar: string | null;
   cover: string;
   duration: number;
-  videoUrl: string;
-  videoUrlHd: string | null;
-  musicUrl: string | null;
+  downloads: DownloadQuality[];
   source: "tiktok" | "douyin";
   provider: "tikwm" | "ssstik" | "tikmate";
 };
