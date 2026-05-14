@@ -409,11 +409,10 @@ function Index() {
           </div>
         </section>
 
-        <p className="mx-auto mt-16 max-w-2xl text-center text-xs text-muted-foreground">
-          TaiTok chỉ phục vụ mục đích cá nhân. Vui lòng tôn trọng bản quyền của tác giả gốc và
-          không sử dụng nội dung tải xuống cho mục đích thương mại khi chưa được phép.
-        </p>
-      </main>
-    </div>
+      <p className="mx-auto mt-16 max-w-2xl text-center text-xs text-muted-foreground">
+        VideoTik chỉ phục vụ mục đích cá nhân. Vui lòng tôn trọng bản quyền của tác giả gốc và
+        không sử dụng nội dung tải xuống cho mục đích thương mại khi chưa được phép.
+      </p>
+    </main>
   );
 }
