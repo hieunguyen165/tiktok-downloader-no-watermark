@@ -115,6 +115,20 @@ async function fromTikwm(url: string, source: "tiktok" | "douyin"): Promise<Vide
   const toAbs = (p: string) =>
     p.startsWith("http") ? p : `https://www.tikwm.com${p}`;
 
+  const downloads: DownloadQuality[] = [];
+  if (d.hdplay) {
+    downloads.push({ label: "HD không logo", quality: "hd", url: toAbs(d.hdplay), ext: "mp4", note: "Chất lượng cao nhất" });
+  }
+  if (d.play) {
+    downloads.push({ label: "SD không logo", quality: "sd", url: toAbs(d.play), ext: "mp4", note: "Nhẹ, tải nhanh" });
+  }
+  if (d.wmplay) {
+    downloads.push({ label: "Có watermark", quality: "watermark", url: toAbs(d.wmplay), ext: "mp4", note: "Giữ logo gốc" });
+  }
+  if (d.music) {
+    downloads.push({ label: "Chỉ âm thanh (MP3)", quality: "audio", url: toAbs(d.music), ext: "mp3" });
+  }
+
   return {
     id: d.id,
     title: d.title,
@@ -122,9 +136,7 @@ async function fromTikwm(url: string, source: "tiktok" | "douyin"): Promise<Vide
     authorAvatar: d.author?.avatar ? toAbs(d.author.avatar) : null,
     cover: toAbs(d.origin_cover || d.cover),
     duration: d.duration,
-    videoUrl: toAbs(d.play),
-    videoUrlHd: d.hdplay ? toAbs(d.hdplay) : null,
-    musicUrl: d.music ? toAbs(d.music) : null,
+    downloads,
     source,
     provider: "tikwm",
   };
