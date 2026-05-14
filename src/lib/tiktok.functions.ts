@@ -48,6 +48,14 @@ const rawInputSchema = z.object({
   url: z.string().trim().min(1, "Vui lòng nhập link").max(500, "Link quá dài"),
 });
 
+export type DownloadQuality = {
+  label: string;
+  quality: "hd" | "sd" | "watermark" | "audio";
+  url: string;
+  ext: "mp4" | "mp3";
+  note?: string;
+};
+
 export type VideoInfo = {
   id: string;
   title: string;
@@ -55,9 +63,7 @@ export type VideoInfo = {
   authorAvatar: string | null;
   cover: string;
   duration: number;
-  videoUrl: string;
-  videoUrlHd: string | null;
-  musicUrl: string | null;
+  downloads: DownloadQuality[];
   source: "tiktok" | "douyin";
   provider: "tikwm" | "ssstik" | "tikmate";
 };
@@ -109,6 +115,20 @@ async function fromTikwm(url: string, source: "tiktok" | "douyin"): Promise<Vide
   const toAbs = (p: string) =>
     p.startsWith("http") ? p : `https://www.tikwm.com${p}`;
 
+  const downloads: DownloadQuality[] = [];
+  if (d.hdplay) {
+    downloads.push({ label: "HD không logo", quality: "hd", url: toAbs(d.hdplay), ext: "mp4", note: "Chất lượng cao nhất" });
+  }
+  if (d.play) {
+    downloads.push({ label: "SD không logo", quality: "sd", url: toAbs(d.play), ext: "mp4", note: "Nhẹ, tải nhanh" });
+  }
+  if (d.wmplay) {
+    downloads.push({ label: "Có watermark", quality: "watermark", url: toAbs(d.wmplay), ext: "mp4", note: "Giữ logo gốc" });
+  }
+  if (d.music) {
+    downloads.push({ label: "Chỉ âm thanh (MP3)", quality: "audio", url: toAbs(d.music), ext: "mp3" });
+  }
+
   return {
     id: d.id,
     title: d.title,
@@ -116,9 +136,7 @@ async function fromTikwm(url: string, source: "tiktok" | "douyin"): Promise<Vide
     authorAvatar: d.author?.avatar ? toAbs(d.author.avatar) : null,
     cover: toAbs(d.origin_cover || d.cover),
     duration: d.duration,
-    videoUrl: toAbs(d.play),
-    videoUrlHd: d.hdplay ? toAbs(d.hdplay) : null,
-    musicUrl: d.music ? toAbs(d.music) : null,
+    downloads,
     source,
     provider: "tikwm",
   };
@@ -187,6 +205,13 @@ async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<Vid
   const titleMatch = html.match(/<p class="maintext">([\s\S]*?)<\/p>/i);
   const authorMatch = html.match(/<h2>([\s\S]*?)<\/h2>/i);
 
+  const downloads: DownloadQuality[] = [
+    { label: "SD không logo", quality: "sd", url: videoUrl, ext: "mp4" },
+  ];
+  if (musicMatch) {
+    downloads.push({ label: "Chỉ âm thanh (MP3)", quality: "audio", url: decode(musicMatch[1]), ext: "mp3" });
+  }
+
   return {
     id: String(Date.now()),
     title: titleMatch ? decode(titleMatch[1].replace(/<[^>]+>/g, "")).trim() : "",
@@ -194,9 +219,7 @@ async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<Vid
     authorAvatar: null,
     cover: coverMatch ? decode(coverMatch[1]) : "",
     duration: 0,
-    videoUrl,
-    videoUrlHd: null,
-    musicUrl: musicMatch ? decode(musicMatch[1]) : null,
+    downloads,
     source,
     provider: "ssstik",
   };
