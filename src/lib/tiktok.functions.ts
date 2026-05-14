@@ -205,6 +205,13 @@ async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<Vid
   const titleMatch = html.match(/<p class="maintext">([\s\S]*?)<\/p>/i);
   const authorMatch = html.match(/<h2>([\s\S]*?)<\/h2>/i);
 
+  const downloads: DownloadQuality[] = [
+    { label: "SD không logo", quality: "sd", url: videoUrl, ext: "mp4" },
+  ];
+  if (musicMatch) {
+    downloads.push({ label: "Chỉ âm thanh (MP3)", quality: "audio", url: decode(musicMatch[1]), ext: "mp3" });
+  }
+
   return {
     id: String(Date.now()),
     title: titleMatch ? decode(titleMatch[1].replace(/<[^>]+>/g, "")).trim() : "",
@@ -212,9 +219,7 @@ async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<Vid
     authorAvatar: null,
     cover: coverMatch ? decode(coverMatch[1]) : "",
     duration: 0,
-    videoUrl,
-    videoUrlHd: null,
-    musicUrl: musicMatch ? decode(musicMatch[1]) : null,
+    downloads,
     source,
     provider: "ssstik",
   };
