@@ -110,10 +110,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <SeoInjector />
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[oklch(0.6_0.25_350)] opacity-20 blur-[120px]" />
+          <div className="absolute top-40 right-0 h-[400px] w-[400px] rounded-full bg-[oklch(0.7_0.2_200)] opacity-15 blur-[100px]" />
+        </div>
+        {!isAdmin && <SiteHeader />}
+        <div className="flex-1">
+          <Outlet />
+        </div>
+        {!isAdmin && <SiteFooter />}
+      </div>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
