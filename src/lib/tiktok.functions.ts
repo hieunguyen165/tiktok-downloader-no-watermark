@@ -44,6 +44,10 @@ const inputSchema = z.object({
     }, "Link phải trỏ tới một video cụ thể (vd: tiktok.com/@user/video/123...)"),
 });
 
+const rawInputSchema = z.object({
+  url: z.string().trim().min(1, "Vui lòng nhập link").max(500, "Link quá dài"),
+});
+
 export type VideoInfo = {
   id: string;
   title: string;
@@ -57,6 +61,10 @@ export type VideoInfo = {
   source: "tiktok" | "douyin";
   provider: "tikwm" | "ssstik" | "tikmate";
 };
+
+export type FetchVideoResult =
+  | { ok: true; video: VideoInfo }
+  | { ok: false; error: string; details?: string[] };
 
 class QuotaError extends Error {}
 
