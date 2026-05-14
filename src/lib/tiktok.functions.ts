@@ -48,11 +48,14 @@ const rawInputSchema = z.object({
   url: z.string().trim().min(1, "Vui lòng nhập link").max(500, "Link quá dài"),
 });
 
+export type QualityTier = "sd" | "hd" | "fhd" | "qhd" | "uhd" | "8k" | "watermark" | "audio";
+
 export type DownloadQuality = {
   label: string;
-  quality: "hd" | "sd" | "watermark" | "audio";
+  quality: QualityTier;
   url: string;
   ext: "mp4" | "mp3";
+  size?: number; // bytes, nếu provider trả về
   note?: string;
 };
 
