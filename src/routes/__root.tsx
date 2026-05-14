@@ -4,12 +4,15 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
+import { SeoInjector } from "@/components/SeoInjector";
+import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
 
 function NotFoundComponent() {
   return (
@@ -73,20 +76,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "VideoTik" },
+      { name: "description", content: "Tải video TikTok, Douyin không logo, MP4 HD và MP3 miễn phí." },
+      { name: "author", content: "VideoTik" },
+      { property: "og:site_name", content: "VideoTik" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:locale", content: "vi_VN" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
     ],
   }),
   shellComponent: RootShell,
@@ -111,10 +110,23 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <SeoInjector />
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[oklch(0.6_0.25_350)] opacity-20 blur-[120px]" />
+          <div className="absolute top-40 right-0 h-[400px] w-[400px] rounded-full bg-[oklch(0.7_0.2_200)] opacity-15 blur-[100px]" />
+        </div>
+        {!isAdmin && <SiteHeader />}
+        <div className="flex-1">
+          <Outlet />
+        </div>
+        {!isAdmin && <SiteFooter />}
+      </div>
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
