@@ -47,7 +47,13 @@ function Index() {
     setVideo(null);
     try {
       const result = await fetchVideoFn({ data: { url: url.trim() } });
-      setVideo(result);
+      if (result.ok) {
+        setVideo(result.video);
+      } else {
+        toast.error(result.error, {
+          description: result.details?.join(" | "),
+        });
+      }
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Có lỗi xảy ra, vui lòng thử lại.";
       toast.error(msg);
