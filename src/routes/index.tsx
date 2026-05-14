@@ -46,7 +46,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          name: "TaiTok",
+          name: "VideoTik",
           applicationCategory: "MultimediaApplication",
           operatingSystem: "Any",
           description:
@@ -73,7 +73,7 @@ export const Route = createFileRoute("/")({
               name: "Tải video TikTok có miễn phí không?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "Có. TaiTok miễn phí 100%, không giới hạn lượt tải, không cần đăng ký hay cài đặt phần mềm.",
+                text: "Có. VideoTik miễn phí 100%, không giới hạn lượt tải, không cần đăng ký hay cài đặt phần mềm.",
               },
             },
             {
@@ -382,7 +382,7 @@ function Index() {
                 a: "Sao chép link video từ app TikTok (Chia sẻ → Sao chép liên kết), dán vào ô phía trên và bấm Tải video. Hệ thống trả về file MP4 không watermark.",
               },
               {
-                q: "Tải video TikTok trên TaiTok có miễn phí không?",
+                q: "Tải video TikTok trên VideoTik có miễn phí không?",
                 a: "Hoàn toàn miễn phí, không giới hạn lượt tải, không cần đăng ký tài khoản hay cài đặt phần mềm.",
               },
               {
@@ -394,7 +394,7 @@ function Index() {
                 a: "Tối đa 1080p (Full HD) – đúng bằng chất lượng gốc TikTok và Douyin phát hành. Các tuỳ chọn 2K/4K/8K không khả dụng vì nguồn thật không có.",
               },
               {
-                q: "TaiTok có hỗ trợ tải video Douyin không?",
+                q: "VideoTik có hỗ trợ tải video Douyin không?",
                 a: "Có. Công cụ hỗ trợ cả link TikTok quốc tế và Douyin (TikTok Trung Quốc).",
               },
             ].map((item) => (
