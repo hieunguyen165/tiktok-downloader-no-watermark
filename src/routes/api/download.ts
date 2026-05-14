@@ -1,6 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-const ALLOWED_HOST_SUFFIXES = ["tikwm.com", "tiktokcdn.com", "tiktokcdn-us.com", "douyinpic.com", "douyinvod.com", "bytecdn.cn", "byteimg.com"];
+const ALLOWED_HOST_SUFFIXES = [
+  "tikwm.com",
+  "tiktokcdn.com",
+  "tiktokcdn-us.com",
+  "tiktokv.com",
+  "tikcdn.io",
+  "tikcdn.com",
+  "ssstik.io",
+  "douyinpic.com",
+  "douyinvod.com",
+  "bytecdn.cn",
+  "byteimg.com",
+];
 
 export const Route = createFileRoute("/api/download")({
   server: {
