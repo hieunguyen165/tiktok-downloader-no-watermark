@@ -177,13 +177,14 @@ function Index() {
           <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
             Tải video{" "}
             <span className="bg-gradient-to-r from-[oklch(0.7_0.25_350)] to-[oklch(0.7_0.2_200)] bg-clip-text text-transparent">
-              TikTok & Douyin
-            </span>
+              TikTok
+            </span>{" "}
+            không logo
             <br />
-            không watermark
+            <span className="text-3xl sm:text-4xl">MP4 HD · MP3 · Douyin</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Dán link video, bấm tải và lưu file MP4 chất lượng cao về máy. Không nhãn, không quảng cáo.
+            Dán link để tải video TikTok / Douyin không watermark chất lượng Full HD 1080p, kèm tải nhạc MP3. Miễn phí, không cần cài app.
           </p>
 
           <form
