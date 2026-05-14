@@ -88,7 +88,9 @@ function BlogPage() {
         Blog VideoTik – Mẹo tải và sáng tạo video TikTok
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Tập hợp các bài viết về <strong>tải video TikTok không watermark</strong>, kỹ thuật làm video viral, so sánh TikTok với Douyin, cách lưu và tận dụng nhạc TikTok cho mục đích cá nhân – cập nhật thường xuyên cho cộng đồng người dùng tiếng Việt.
+        Tập hợp các bài viết về <strong>tải video TikTok không watermark</strong>, kỹ thuật làm
+        video viral, so sánh TikTok với Douyin, cách lưu và tận dụng nhạc TikTok cho mục đích cá
+        nhân – cập nhật thường xuyên cho cộng đồng người dùng tiếng Việt.
       </p>
 
       <div className="mt-10 space-y-8">
@@ -112,7 +114,15 @@ function BlogPage() {
       </div>
 
       <p className="mt-12 rounded-xl border border-border bg-card/40 p-5 text-sm text-muted-foreground">
-        Đọc thêm <Link to="/huong-dan" className="font-medium text-foreground underline">Hướng dẫn</Link> và <Link to="/cau-hoi" className="font-medium text-foreground underline">Câu hỏi thường gặp</Link> để khai thác tối đa VideoTik.
+        Đọc thêm{" "}
+        <Link to="/huong-dan" className="font-medium text-foreground underline">
+          Hướng dẫn
+        </Link>{" "}
+        và{" "}
+        <Link to="/cau-hoi" className="font-medium text-foreground underline">
+          Câu hỏi thường gặp
+        </Link>{" "}
+        để khai thác tối đa VideoTik.
       </p>
     </main>
   );

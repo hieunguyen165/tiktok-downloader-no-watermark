@@ -29,9 +29,7 @@ export function SeoInjector() {
 
       // Description override
       if (cfg.siteDescription && cfg.siteDescription.trim()) {
-        let m = document.querySelector<HTMLMetaElement>(
-          'meta[name="description"]',
-        );
+        let m = document.querySelector<HTMLMetaElement>('meta[name="description"]');
         if (!m) {
           m = document.createElement("meta");
           m.name = "description";
@@ -43,9 +41,7 @@ export function SeoInjector() {
       // GSC verification meta
       if (cfg.gscVerification && cfg.gscVerification.trim()) {
         const v = cfg.gscVerification.trim();
-        let m = document.querySelector<HTMLMetaElement>(
-          'meta[name="google-site-verification"]',
-        );
+        let m = document.querySelector<HTMLMetaElement>('meta[name="google-site-verification"]');
         if (!m) {
           m = document.createElement("meta");
           m.name = "google-site-verification";

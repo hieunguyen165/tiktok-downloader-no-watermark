@@ -99,7 +99,9 @@ function CauHoiPage() {
         Câu hỏi thường gặp khi tải video TikTok
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Tổng hợp các thắc mắc phổ biến nhất của người dùng VideoTik về việc <strong>tải video TikTok không logo</strong>, <strong>tải nhạc TikTok MP3</strong>, vấn đề bản quyền và những lỗi hay gặp khi tải video Douyin.
+        Tổng hợp các thắc mắc phổ biến nhất của người dùng VideoTik về việc{" "}
+        <strong>tải video TikTok không logo</strong>, <strong>tải nhạc TikTok MP3</strong>, vấn đề
+        bản quyền và những lỗi hay gặp khi tải video Douyin.
       </p>
 
       <div className="mt-10 space-y-3">
@@ -119,7 +121,15 @@ function CauHoiPage() {
       </div>
 
       <p className="mt-12 rounded-xl border border-border bg-card/40 p-5 text-sm text-muted-foreground">
-        Chưa thấy câu trả lời bạn cần? Đọc thêm <Link to="/huong-dan" className="font-medium text-foreground underline">Hướng dẫn chi tiết</Link> hoặc bắt đầu <Link to="/" className="font-medium text-foreground underline">tải video ngay</Link>.
+        Chưa thấy câu trả lời bạn cần? Đọc thêm{" "}
+        <Link to="/huong-dan" className="font-medium text-foreground underline">
+          Hướng dẫn chi tiết
+        </Link>{" "}
+        hoặc bắt đầu{" "}
+        <Link to="/" className="font-medium text-foreground underline">
+          tải video ngay
+        </Link>
+        .
       </p>
     </main>
   );
