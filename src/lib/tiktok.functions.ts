@@ -28,7 +28,20 @@ const inputSchema = z.object({
       } catch {
         return false;
       }
-    }, "Chỉ hỗ trợ link TikTok hoặc Douyin"),
+    }, "Chỉ hỗ trợ link TikTok hoặc Douyin")
+    .refine((u) => {
+      try {
+        const { hostname, pathname } = new URL(u);
+        const host = hostname.toLowerCase();
+        // Link rút gọn: vm./vt./v. — chỉ cần có path
+        if (/^(vm|vt|v|m)\./.test(host)) return pathname.length > 1;
+        // Link đầy đủ: phải có /video/<id>, /v/<id>, hoặc /@user/video/<id>
+        return /\/(video|v|share\/video)\/\d+/.test(pathname)
+          || /\/@[^/]+\/video\/\d+/.test(pathname);
+      } catch {
+        return false;
+      }
+    }, "Link phải trỏ tới một video cụ thể (vd: tiktok.com/@user/video/123...)"),
 });
 
 export type VideoInfo = {
