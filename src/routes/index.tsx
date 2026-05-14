@@ -224,10 +224,7 @@ function Index() {
           <Card className="mx-auto mt-8 max-w-2xl overflow-hidden border-border bg-card text-left">
             <div className="flex flex-col gap-5 p-5 sm:flex-row">
               <div className="relative aspect-[9/16] w-full overflow-hidden rounded-lg bg-muted sm:w-40 sm:flex-shrink-0">
-                {video.cover && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={video.cover} alt={video.title} className="h-full w-full object-cover" />
-                )}
+                {video.cover && <img src={video.cover} alt={video.title} className="h-full w-full object-cover" />}
                 <span className="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white">
                   {formatDuration(video.duration)}
                 </span>
