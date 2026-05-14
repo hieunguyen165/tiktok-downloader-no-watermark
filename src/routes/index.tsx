@@ -183,38 +183,40 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">@{video.author}</p>
                   )}
 
-                  <div className="mt-auto flex flex-wrap gap-2 pt-4">
-                    <Button asChild className="bg-gradient-to-r from-[oklch(0.65_0.25_350)] to-[oklch(0.6_0.22_330)] text-white hover:opacity-90">
-                      <a
-                        href={downloadUrl(video.videoUrl, `${video.id}.mp4`)}
-                        download
-                      >
-                        <Download className="mr-2 h-4 w-4" />
-                        Tải MP4
-                      </a>
-                    </Button>
-                    {video.videoUrlHd && (
-                      <Button asChild variant="secondary">
-                        <a
-                          href={downloadUrl(video.videoUrlHd, `${video.id}-hd.mp4`)}
-                          download
-                        >
-                          <Download className="mr-2 h-4 w-4" />
-                          HD
-                        </a>
-                      </Button>
-                    )}
-                    {video.musicUrl && (
-                      <Button asChild variant="outline">
-                        <a
-                          href={downloadUrl(video.musicUrl, `${video.id}.mp3`)}
-                          download
-                        >
-                          <Music className="mr-2 h-4 w-4" />
-                          MP3
-                        </a>
-                      </Button>
-                    )}
+                  <div className="mt-auto space-y-2 pt-4">
+                    <p className="text-xs font-medium text-muted-foreground">Chọn chất lượng tải xuống:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {video.downloads.map((d, i) => {
+                        const isPrimary = i === 0;
+                        const isAudio = d.quality === "audio";
+                        const filename = `${video.id}${d.quality === "hd" ? "-hd" : d.quality === "watermark" ? "-wm" : ""}.${d.ext}`;
+                        return (
+                          <Button
+                            key={`${d.quality}-${i}`}
+                            asChild
+                            variant={isPrimary ? "default" : isAudio ? "outline" : "secondary"}
+                            className={
+                              isPrimary
+                                ? "bg-gradient-to-r from-[oklch(0.65_0.25_350)] to-[oklch(0.6_0.22_330)] text-white hover:opacity-90"
+                                : ""
+                            }
+                          >
+                            <a
+                              href={downloadUrl(d.url, filename)}
+                              download
+                              title={d.note}
+                            >
+                              {isAudio ? (
+                                <Music className="mr-2 h-4 w-4" />
+                              ) : (
+                                <Download className="mr-2 h-4 w-4" />
+                              )}
+                              {d.label}
+                            </a>
+                          </Button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
