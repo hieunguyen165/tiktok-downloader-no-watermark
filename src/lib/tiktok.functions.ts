@@ -125,26 +125,40 @@ async function fromTikwm(url: string, source: "tiktok" | "douyin"): Promise<Vide
 }
 
 async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<VideoInfo> {
-  // Lấy token tt từ trang chủ
-  const home = await fetch("https://ssstik.io/en", {
+  const homeUrl = "https://ssstik.io/en";
+  const browserHeaders = {
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+  };
+
+  const home = await fetch(homeUrl, {
     headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+      ...browserHeaders,
     },
   });
   const homeHtml = await home.text();
-  const ttMatch = homeHtml.match(/tt:\s*"([^"]+)"/);
+
+  const endpointMatch = homeHtml.match(/hx-post="([^"]+)"/i);
+  const ttMatch = homeHtml.match(/s_tt\s*=\s*['"]([^'"]+)['"]/i)
+    || homeHtml.match(/tt:\s*"([^"]+)"/i)
+    || homeHtml.match(/&quot;tt&quot;:&quot;([^&]+)&quot;/i);
+  if (!endpointMatch) throw new Error("Ssstik: không lấy được endpoint");
   if (!ttMatch) throw new Error("Ssstik: không lấy được token");
 
-  const res = await fetch("https://ssstik.io/abyss.php?lang=en", {
+  const endpoint = new URL(endpointMatch[1].replace(/&amp;/g, "&"), homeUrl).toString();
+
+  const res = await fetch(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
+      ...browserHeaders,
       "HX-Request": "true",
+      "HX-Target": "target",
+      "HX-Current-URL": homeUrl,
       Origin: "https://ssstik.io",
-      Referer: "https://ssstik.io/en",
+      Referer: homeUrl,
     },
     body: new URLSearchParams({ id: url, locale: "en", tt: ttMatch[1] }).toString(),
   });
