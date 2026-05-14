@@ -148,26 +148,7 @@ function Index() {
     `/api/download?url=${encodeURIComponent(target)}&filename=${encodeURIComponent(filename)}`;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-[oklch(0.6_0.25_350)] opacity-20 blur-[120px]" />
-        <div className="absolute top-40 right-0 h-[400px] w-[400px] rounded-full bg-[oklch(0.7_0.2_200)] opacity-15 blur-[100px]" />
-      </div>
-
-      <header className="container mx-auto flex items-center justify-between px-4 py-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[oklch(0.7_0.25_350)] to-[oklch(0.65_0.2_200)]">
-            <Download className="h-5 w-5 text-white" />
-          </div>
-          <span className="text-lg font-bold tracking-tight">TaiTok</span>
-        </div>
-        <span className="text-xs text-muted-foreground hidden sm:block">
-          Tải video không watermark
-        </span>
-      </header>
-
-      <main className="container mx-auto px-4 pb-20">
+    <main className="container mx-auto px-4 pb-20">
         <section className="mx-auto max-w-3xl pt-12 text-center sm:pt-20">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-1.5 text-xs backdrop-blur">
             <Sparkles className="h-3.5 w-3.5 text-[oklch(0.7_0.25_350)]" />
