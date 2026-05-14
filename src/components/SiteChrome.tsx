@@ -50,17 +50,38 @@ export function SiteFooter() {
         <div>
           <div className="text-sm font-semibold">Sản phẩm</div>
           <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
-            <li><Link to="/" className="hover:text-foreground">Tải video TikTok</Link></li>
-            <li><Link to="/huong-dan" className="hover:text-foreground">Hướng dẫn sử dụng</Link></li>
-            <li><Link to="/cau-hoi" className="hover:text-foreground">Câu hỏi thường gặp</Link></li>
-            <li><Link to="/blog" className="hover:text-foreground">Blog mẹo TikTok</Link></li>
-            <li><Link to="/admin" className="hover:text-foreground">Đăng nhập quản trị</Link></li>
+            <li>
+              <Link to="/" className="hover:text-foreground">
+                Tải video TikTok
+              </Link>
+            </li>
+            <li>
+              <Link to="/huong-dan" className="hover:text-foreground">
+                Hướng dẫn sử dụng
+              </Link>
+            </li>
+            <li>
+              <Link to="/cau-hoi" className="hover:text-foreground">
+                Câu hỏi thường gặp
+              </Link>
+            </li>
+            <li>
+              <Link to="/blog" className="hover:text-foreground">
+                Blog mẹo TikTok
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin" className="hover:text-foreground">
+                Đăng nhập quản trị
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
           <div className="text-sm font-semibold">Pháp lý</div>
           <p className="mt-2 text-xs text-muted-foreground">
-            VideoTik chỉ hỗ trợ tải nội dung phục vụ mục đích cá nhân. Vui lòng tôn trọng bản quyền tác giả gốc và các điều khoản của TikTok / Douyin.
+            VideoTik chỉ hỗ trợ tải nội dung phục vụ mục đích cá nhân. Vui lòng tôn trọng bản quyền
+            tác giả gốc và các điều khoản của TikTok / Douyin.
           </p>
         </div>
       </div>

@@ -11,10 +11,7 @@ import { Lock, Save, LogOut, ShieldAlert, Activity, Search } from "lucide-react"
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [
-      { title: "Quản trị - VideoTik" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
+    meta: [{ title: "Quản trị - VideoTik" }, { name: "robots", content: "noindex, nofollow" }],
   }),
   component: AdminPage,
 });
@@ -100,7 +97,10 @@ function AdminPage() {
             <ShieldAlert className="mr-1 inline h-3.5 w-3.5" />
             Mật khẩu được đối chiếu phía server với biến môi trường <code>ADMIN_PASSWORD</code>.
           </p>
-          <Link to="/" className="mt-4 block text-center text-xs text-muted-foreground hover:text-foreground">
+          <Link
+            to="/"
+            className="mt-4 block text-center text-xs text-muted-foreground hover:text-foreground"
+          >
             ← Quay về trang chủ
           </Link>
         </Card>
@@ -137,7 +137,9 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       <header className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Bảng điều khiển SEO</h1>
-          <p className="text-sm text-muted-foreground">Cấu hình meta, Analytics và Search Console.</p>
+          <p className="text-sm text-muted-foreground">
+            Cấu hình meta, Analytics và Search Console.
+          </p>
         </div>
         <div className="flex items-center gap-2">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">
@@ -194,7 +196,17 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
             placeholder="G-XXXXXXXXXX"
           />
           <p className="mt-2 text-xs text-muted-foreground">
-            Lấy tại <a href="https://analytics.google.com/" target="_blank" rel="noreferrer" className="underline">analytics.google.com</a> → Admin → Data Streams. Khi nhập đúng định dạng <code>G-XXXX</code>, gtag.js được nạp tự động trên mọi trang.
+            Lấy tại{" "}
+            <a
+              href="https://analytics.google.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              analytics.google.com
+            </a>{" "}
+            → Admin → Data Streams. Khi nhập đúng định dạng <code>G-XXXX</code>, gtag.js được nạp tự
+            động trên mọi trang.
           </p>
         </Card>
 
@@ -211,7 +223,18 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
             placeholder="abcdef1234567890..."
           />
           <p className="mt-2 text-xs text-muted-foreground">
-            Trên <a href="https://search.google.com/search-console" target="_blank" rel="noreferrer" className="underline">Search Console</a>, chọn <em>Add property → URL prefix → HTML tag</em>. Sao chép <strong>chỉ giá trị bên trong content="…"</strong> và dán vào đây. Sau khi lưu, tải lại trang chủ rồi bấm <em>Verify</em>.
+            Trên{" "}
+            <a
+              href="https://search.google.com/search-console"
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              Search Console
+            </a>
+            , chọn <em>Add property → URL prefix → HTML tag</em>. Sao chép{" "}
+            <strong>chỉ giá trị bên trong content="…"</strong> và dán vào đây. Sau khi lưu, tải lại
+            trang chủ rồi bấm <em>Verify</em>.
           </p>
         </Card>
 
@@ -223,7 +246,9 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
         <p className="rounded-xl border border-border bg-card/40 p-4 text-xs text-muted-foreground">
           <ShieldAlert className="mr-1 inline h-3.5 w-3.5" />
-          Cấu hình được lưu vào <code>localStorage</code> của trình duyệt và inject vào trang qua client-side. Phù hợp cho GA và GSC vì Googlebot biết render JavaScript. Nếu cần SSR cứng, hãy gắn các giá trị này thành biến môi trường khi build.
+          Cấu hình được lưu vào <code>localStorage</code> của trình duyệt và inject vào trang qua
+          client-side. Phù hợp cho GA và GSC vì Googlebot biết render JavaScript. Nếu cần SSR cứng,
+          hãy gắn các giá trị này thành biến môi trường khi build.
         </p>
       </form>
     </main>
