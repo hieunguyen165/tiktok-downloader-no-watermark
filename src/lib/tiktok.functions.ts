@@ -203,8 +203,14 @@ async function fromSsstik(url: string, source: "tiktok" | "douyin"): Promise<Vid
 }
 
 export const fetchVideo = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => inputSchema.parse(input))
-  .handler(async ({ data }): Promise<VideoInfo> => {
+  .inputValidator((input: unknown) => rawInputSchema.parse(input))
+  .handler(async ({ data }): Promise<FetchVideoResult> => {
+    const parsedInput = inputSchema.safeParse(data);
+    if (!parsedInput.success) {
+      return { ok: false, error: parsedInput.error.issues[0]?.message || "Link không hợp lệ" };
+    }
+
+    const { url } = parsedInput.data;
     const host = new URL(data.url).hostname.toLowerCase();
     const source: "tiktok" | "douyin" = host.includes("douyin") ? "douyin" : "tiktok";
 
@@ -212,7 +218,7 @@ export const fetchVideo = createServerFn({ method: "POST" })
 
     // 1) TikWM (primary)
     try {
-      return await fromTikwm(data.url, source);
+      return { ok: true, video: await fromTikwm(url, source) };
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       errors.push(`TikWM: ${msg}`);
@@ -222,7 +228,7 @@ export const fetchVideo = createServerFn({ method: "POST" })
     // 2) Ssstik (fallback, chỉ tốt cho TikTok)
     if (source === "tiktok") {
       try {
-        return await fromSsstik(data.url, source);
+        return { ok: true, video: await fromSsstik(url, source) };
       } catch (e) {
         const msg = e instanceof Error ? e.message : String(e);
         errors.push(`Ssstik: ${msg}`);
@@ -230,7 +236,9 @@ export const fetchVideo = createServerFn({ method: "POST" })
       }
     }
 
-    throw new Error(
-      `Tất cả nhà cung cấp đều thất bại. Vui lòng thử lại sau.\n${errors.join(" | ")}`,
-    );
+    return {
+      ok: false,
+      error: "Không thể lấy video từ các nguồn hiện tại. Vui lòng thử lại sau hoặc dùng link TikTok đầy đủ.",
+      details: errors,
+    };
   });
