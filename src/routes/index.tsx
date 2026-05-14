@@ -11,16 +11,89 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TaiTok — Tải video TikTok & Douyin không logo, miễn phí" },
+      { title: "Tải Video TikTok Không Logo - Tải TikTok MP4, MP3 Miễn Phí" },
       {
         name: "description",
         content:
-          "Dán link TikTok hoặc Douyin để tải video MP4 chất lượng cao, không watermark. Miễn phí, không cần cài app.",
+          "Tải video TikTok không logo, không watermark chất lượng HD/1080p. Hỗ trợ tải video Douyin, tải nhạc TikTok MP3 miễn phí, nhanh, không cần cài app.",
       },
-      { property: "og:title", content: "TaiTok — Tải video TikTok & Douyin không logo" },
+      {
+        name: "keywords",
+        content:
+          "tải video tiktok, tải video tiktok không logo, tải tiktok không watermark, tải video douyin, tải nhạc tiktok mp3, tải tiktok hd, download tiktok",
+      },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Tải Video TikTok Không Logo - MP4 HD Miễn Phí" },
       {
         property: "og:description",
-        content: "Tải video TikTok / Douyin không watermark, nhanh và miễn phí.",
+        content:
+          "Dán link để tải video TikTok / Douyin không watermark, chất lượng HD 1080p, kèm tải nhạc MP3. Miễn phí 100%.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+      { property: "og:locale", content: "vi_VN" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Tải Video TikTok Không Logo - MP4 HD Miễn Phí" },
+      {
+        name: "twitter:description",
+        content: "Tải video TikTok, Douyin không watermark chất lượng HD. Miễn phí, nhanh chóng.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "TaiTok",
+          applicationCategory: "MultimediaApplication",
+          operatingSystem: "Any",
+          description:
+            "Công cụ tải video TikTok và Douyin không watermark, hỗ trợ MP4 HD 1080p và MP3.",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "VND" },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: [
+            {
+              "@type": "Question",
+              name: "Làm sao để tải video TikTok không logo?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Sao chép link video từ app TikTok, dán vào ô nhập trên trang và bấm Tải video. Hệ thống sẽ trả về file MP4 không watermark.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Tải video TikTok có miễn phí không?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Có. TaiTok miễn phí 100%, không giới hạn lượt tải, không cần đăng ký hay cài đặt phần mềm.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Có thể tải nhạc MP3 từ TikTok không?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Có. Sau khi xử lý link, bạn có thể chọn tải file MP3 chứa âm thanh gốc của video.",
+              },
+            },
+            {
+              "@type": "Question",
+              name: "Chất lượng video tải xuống tối đa là bao nhiêu?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Tối đa 1080p (Full HD) – đúng bằng chất lượng gốc mà TikTok và Douyin phát hành.",
+              },
+            },
+          ],
+        }),
       },
     ],
   }),
@@ -104,13 +177,14 @@ function Index() {
           <h1 className="text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
             Tải video{" "}
             <span className="bg-gradient-to-r from-[oklch(0.7_0.25_350)] to-[oklch(0.7_0.2_200)] bg-clip-text text-transparent">
-              TikTok & Douyin
-            </span>
+              TikTok
+            </span>{" "}
+            không logo
             <br />
-            không watermark
+            <span className="text-3xl sm:text-4xl">MP4 HD · MP3 · Douyin</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg">
-            Dán link video, bấm tải và lưu file MP4 chất lượng cao về máy. Không nhãn, không quảng cáo.
+            Dán link để tải video TikTok / Douyin không watermark chất lượng Full HD 1080p, kèm tải nhạc MP3. Miễn phí, không cần cài app.
           </p>
 
           <form
@@ -313,6 +387,43 @@ function Index() {
                 <h3 className="font-semibold">{s.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{s.desc}</p>
               </div>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="mx-auto mt-20 max-w-3xl">
+          <h2 className="text-center text-2xl font-bold sm:text-3xl">Câu hỏi thường gặp về tải video TikTok</h2>
+          <div className="mt-8 space-y-3">
+            {[
+              {
+                q: "Làm sao để tải video TikTok không logo?",
+                a: "Sao chép link video từ app TikTok (Chia sẻ → Sao chép liên kết), dán vào ô phía trên và bấm Tải video. Hệ thống trả về file MP4 không watermark.",
+              },
+              {
+                q: "Tải video TikTok trên TaiTok có miễn phí không?",
+                a: "Hoàn toàn miễn phí, không giới hạn lượt tải, không cần đăng ký tài khoản hay cài đặt phần mềm.",
+              },
+              {
+                q: "Có thể tải nhạc MP3 từ video TikTok không?",
+                a: "Có. Sau khi xử lý, bạn có thể chọn tải file MP3 chứa âm thanh gốc của video TikTok.",
+              },
+              {
+                q: "Chất lượng video TikTok tải xuống tối đa bao nhiêu?",
+                a: "Tối đa 1080p (Full HD) – đúng bằng chất lượng gốc TikTok và Douyin phát hành. Các tuỳ chọn 2K/4K/8K không khả dụng vì nguồn thật không có.",
+              },
+              {
+                q: "TaiTok có hỗ trợ tải video Douyin không?",
+                a: "Có. Công cụ hỗ trợ cả link TikTok quốc tế và Douyin (TikTok Trung Quốc).",
+              },
+            ].map((item) => (
+              <details key={item.q} className="group rounded-xl border border-border bg-card/30 p-4">
+                <summary className="cursor-pointer list-none font-semibold marker:hidden">
+                  <span className="text-[oklch(0.7_0.25_350)]">+ </span>
+                  {item.q}
+                </summary>
+                <p className="mt-2 text-sm text-muted-foreground">{item.a}</p>
+              </details>
             ))}
           </div>
         </section>
