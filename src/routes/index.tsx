@@ -183,40 +183,96 @@ function Index() {
                     <p className="mt-1 text-sm text-muted-foreground">@{video.author}</p>
                   )}
 
-                  <div className="mt-auto space-y-2 pt-4">
-                    <p className="text-xs font-medium text-muted-foreground">Chọn chất lượng tải xuống:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {video.downloads.map((d, i) => {
-                        const isPrimary = i === 0;
-                        const isAudio = d.quality === "audio";
-                        const filename = `${video.id}${d.quality === "hd" ? "-hd" : d.quality === "watermark" ? "-wm" : ""}.${d.ext}`;
+                  <div className="mt-auto space-y-3 pt-4">
+                    <p className="text-xs font-medium text-muted-foreground">
+                      Chọn chất lượng tải xuống:
+                    </p>
+
+                    {/* Thang chất lượng video */}
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                      {([
+                        { tier: "sd", label: "SD", sub: "≈480p" },
+                        { tier: "hd", label: "HD", sub: "≈720p" },
+                        { tier: "fhd", label: "1080p", sub: "Full HD" },
+                        { tier: "qhd", label: "2K", sub: "1440p" },
+                        { tier: "uhd", label: "4K", sub: "2160p" },
+                        { tier: "8k", label: "8K", sub: "4320p" },
+                      ] as const).map(({ tier, label, sub }) => {
+                        // map tier sang download có sẵn
+                        let dl = video.downloads.find((d) => d.quality === tier);
+                        // fallback: 1080p dùng file HD nếu provider không phân biệt
+                        if (!dl && tier === "fhd") {
+                          dl = video.downloads.find((d) => d.quality === "hd");
+                        }
+                        const available = !!dl;
+                        const filename = dl
+                          ? `${video.id}-${tier}.${dl.ext}`
+                          : `${video.id}.mp4`;
                         return (
                           <Button
-                            key={`${d.quality}-${i}`}
-                            asChild
-                            variant={isPrimary ? "default" : isAudio ? "outline" : "secondary"}
+                            key={tier}
+                            asChild={available}
+                            disabled={!available}
+                            variant={tier === "fhd" && available ? "default" : "secondary"}
+                            size="sm"
                             className={
-                              isPrimary
-                                ? "bg-gradient-to-r from-[oklch(0.65_0.25_350)] to-[oklch(0.6_0.22_330)] text-white hover:opacity-90"
-                                : ""
+                              tier === "fhd" && available
+                                ? "h-auto flex-col gap-0 py-2 bg-gradient-to-r from-[oklch(0.65_0.25_350)] to-[oklch(0.6_0.22_330)] text-white hover:opacity-90"
+                                : "h-auto flex-col gap-0 py-2"
+                            }
+                            title={
+                              available
+                                ? `Tải ${label}`
+                                : "Nguồn TikTok/Douyin không cung cấp chất lượng này"
                             }
                           >
-                            <a
-                              href={downloadUrl(d.url, filename)}
-                              download
-                              title={d.note}
-                            >
-                              {isAudio ? (
-                                <Music className="mr-2 h-4 w-4" />
-                              ) : (
-                                <Download className="mr-2 h-4 w-4" />
-                              )}
-                              {d.label}
-                            </a>
+                            {available && dl ? (
+                              <a href={downloadUrl(dl.url, filename)} download>
+                                <span className="text-sm font-semibold leading-none">{label}</span>
+                                <span className="mt-1 text-[10px] opacity-80">{sub}</span>
+                              </a>
+                            ) : (
+                              <>
+                                <span className="text-sm font-semibold leading-none">{label}</span>
+                                <span className="mt-1 text-[10px] opacity-60">N/A</span>
+                              </>
+                            )}
                           </Button>
                         );
                       })}
                     </div>
+
+                    {/* Tuỳ chọn khác: watermark + audio */}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {video.downloads
+                        .filter((d) => d.quality === "watermark" || d.quality === "audio")
+                        .map((d, i) => {
+                          const isAudio = d.quality === "audio";
+                          const filename = `${video.id}${isAudio ? "" : "-wm"}.${d.ext}`;
+                          return (
+                            <Button
+                              key={`extra-${i}`}
+                              asChild
+                              variant="outline"
+                              size="sm"
+                            >
+                              <a href={downloadUrl(d.url, filename)} download title={d.note}>
+                                {isAudio ? (
+                                  <Music className="mr-2 h-4 w-4" />
+                                ) : (
+                                  <Download className="mr-2 h-4 w-4" />
+                                )}
+                                {d.label}
+                              </a>
+                            </Button>
+                          );
+                        })}
+                    </div>
+
+                    <p className="text-[11px] leading-relaxed text-muted-foreground">
+                      Lưu ý: TikTok/Douyin chỉ phát hành video tối đa <b>1080p</b>. Các tuỳ chọn 2K/4K/8K
+                      sẽ bị mờ vì nguồn gốc không có — không thể tạo độ phân giải cao hơn nguồn thật.
+                    </p>
                   </div>
                 </div>
               </div>
