@@ -2,14 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] 
-  2. ⚠️ Node.js 20 deprecated - cần upgrade lên Node.js 24
-
----
-
-## 🔧 **Cách sửa:**
-
-Cập nhật file `.
+    branches: [main]
 
 jobs:
   build-and-deploy:
@@ -19,19 +12,14 @@ jobs:
       
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'  # ← Thay từ '18' thành '20'
+          node-version: '20'
       
       - name: Install dependencies
         run: npm install
       
       - name: Build
         run: npm run build
-      github/workflows/deploy.yml` - thay `node-version: '18'` thành `'20'` hoặc `'lts'`:
-
-```yaml name=.github/workflows/deploy.yml
-- uses: actions/setup-node@v4
-  with:
-    node-version: '20'  
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
