@@ -1,0 +1,17 @@
+# Clone repo về
+git clone https://github.com/hieunguyen165/videotik.git
+cd videotik
+
+# Cập nhật vite.config.ts
+# (mở file và sửa)
+
+# Tạo workflow folder
+mkdir -p .github/workflows
+
+# Tạo deploy.yml
+# (paste nội dung từ trên)
+
+# Push lên
+git add .
+git commit -m "fix: configure GitHub Pages deployment"
+git push origin main
