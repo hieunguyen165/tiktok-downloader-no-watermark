@@ -1,17 +1,27 @@
-# Clone repo về
-git clone https://github.com/hieunguyen165/videotik.git
-cd videotik
+name: Deploy to GitHub Pages
 
-# Cập nhật vite.config.ts
-# (mở file và sửa)
+on:
+  push:
+    branches: [main]
 
-# Tạo workflow folder
-mkdir -p .github/workflows
-
-# Tạo deploy.yml
-# (paste nội dung từ trên)
-
-# Push lên
-git add .
-git commit -m "fix: configure GitHub Pages deployment"
-git push origin main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
